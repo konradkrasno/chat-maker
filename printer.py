@@ -1,12 +1,18 @@
+from loader import ChatLoader
 from chat import Chat
 
 
 class Printer:
-    def __init__(self, chat: Chat) -> None:
-        self.chat = chat
-    
+    def __init__(self, file_path: str = None, chat: Chat = None) -> None:
+        if file_path:
+            self.chat = ChatLoader(logic_file_path=file_path)
+        elif chat:
+            self.chat = chat
+        else:
+            raise Exception("Printer improperly configured.")
+
     def print_graph(self):
-        current_node = "Start"
+        current_node = self.chat.start_node
         prefix_count = 0
 
         print(current_node)

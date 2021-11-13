@@ -1,15 +1,18 @@
-from commands import CommandHandler
 import sys
+
+from commands import CommandHandler
 
 
 if __name__ == "__main__":
     args = sys.argv[1:]
     handler = CommandHandler()
     try:
-        method = getattr(handler, args[0])
-        method(*args[1:])
+        command = args[0]
     except IndexError:
         print("No command provided.")
-        handler.help()
-    except AttributeError:
-        print(f"No command '{args[0]}' available")
+        handler.handle_command("help")
+    else:
+        try:
+            handler.handle_command(command, *args[1:])
+        except Exception as e:
+            print(e)
