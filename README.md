@@ -7,9 +7,11 @@ make build
 
 ### Commands
 ```
-python3 chat_maker.py remove_node --file-path=./tests/chat_flow.json --node-name=TestNode
-python3 chat_maker.py remove_node --file-path=./tests/chat_flow.json --node-name=TestNode
-python3 chat_maker.py add_user_phrase \
+alias chatmaker="python3 chat_maker.py"
+
+chatmaker remove_node --file-path=./tests/chat_flow.json --node-name=TestNode
+chatmaker remove_node --file-path=./tests/chat_flow.json --node-name=TestNode
+chatmaker add_user_phrase \
     --file-path=./tests/chat_flow.json \
     --edited-node=TestNode \
     --success-node=End \
