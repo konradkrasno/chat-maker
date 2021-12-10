@@ -2,7 +2,7 @@ import json
 
 from user_phrase_parser import UserPhraseParserMapping
 from exceptions import (
-    ParserTypeNotExitstsError,
+    ParserTypeNotExistsError,
     UserPhraseTypeExistsError,
     NodeNotExistsError,
     NodeExistsError,
@@ -74,7 +74,7 @@ class ChatEditor:
             )
 
         if user_phrase_type not in UserPhraseParserMapping.keys():
-            raise ParserTypeNotExitstsError(
+            raise ParserTypeNotExistsError(
                 f"UserPhrase parser type: '{user_phrase_type}' not exists."
             )
 

@@ -4,7 +4,7 @@ from exceptions import (
     UserPhraseTypeExistsError,
     NodeNotExistsError,
     NodeExistsError,
-    ParserTypeNotExitstsError,
+    ParserTypeNotExistsError,
 )
 
 
@@ -48,7 +48,7 @@ def test_add_user_phrase_with_node_not_exists_exception(editor):
 
 
 def test_add_user_phrase_with_parser_type_not_exists_exception(editor):
-    with pytest.raises(ParserTypeNotExitstsError):
+    with pytest.raises(ParserTypeNotExistsError):
         editor.add_user_phrase(
             edited_node="Order",
             success_node="End",

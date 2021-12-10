@@ -1,11 +1,10 @@
 import argparse
-import re
 
 from editor import ChatEditor
 from printer import Printer
-from exceptions import CommandNotExistsError
+from exceptions import ConfigurationError
 
-from typing import Dict, List
+from typing import Dict, Tuple
 
 
 COMMANDS = {
@@ -14,7 +13,7 @@ COMMANDS = {
         "class": Printer,
         "class_args": [
             {
-                "name": "--file_path",
+                "name": "--file-path",
                 "type": str,
                 "description": "Provides path for chat logic json file.",
             }
@@ -26,14 +25,14 @@ COMMANDS = {
         "class": ChatEditor,
         "class_args": [
             {
-                "name": "--file_path",
+                "name": "--file-path",
                 "type": str,
                 "description": "Provides path to file to be edited.",
             }
         ],
         "method_args": [
             {
-                "name": "--node_name",
+                "name": "--node-name",
                 "type": str,
                 "description": "Provides new node name.",
             }
@@ -44,14 +43,14 @@ COMMANDS = {
         "class": ChatEditor,
         "class_args": [
             {
-                "name": "--file_path",
+                "name": "--file-path",
                 "type": str,
                 "description": "Provides path to file to be edited.",
             }
         ],
         "method_args": [
             {
-                "name": "--node_name",
+                "name": "--node-name",
                 "type": str,
                 "description": "Provides new node name.",
             }
@@ -67,29 +66,29 @@ COMMANDS = {
         "class": ChatEditor,
         "class_args": [
             {
-                "name": "--file_path",
+                "name": "--file-path",
                 "type": str,
                 "description": "Provides path to file to be edited.",
             }
         ],
         "method_args": [
             {
-                "name": "--edited_node",
+                "name": "--edited-node",
                 "type": str,
                 "description": "Determines node for editing.",
             },
             {
-                "name": "--success_node",
+                "name": "--success-node",
                 "type": str,
                 "description": "???",
             },
                         {
-                "name": "--user_phrase_type",
+                "name": "--user-phrase-type",
                 "type": str,
                 "description": "???",
             },
                         {
-                "name": "--user_phrase_items",
+                "name": "--user-phrase-items",
                 "type": lambda s: s.split(","),
                 "description": "???",
             }
@@ -105,41 +104,64 @@ COMMANDS = {
 
 
 class CommandHandler:
-    def parse_args(self, cmd_data: Dict, group: str, args: List) -> argparse.Namespace:
+    def __init__(self, command_name: str):
+        self.command_name = command_name
+
+    @property
+    def command_data(self) -> Dict:
+        try:
+            return COMMANDS[self.command_name]
+        except KeyError:
+            print(f"Command with name '{self.command_name}' does not exist.")
+            exit(1)
+
+    def parse_args(self, group: str, args: Tuple) -> argparse.Namespace:
         parser = argparse.ArgumentParser()
         fltr_args = []
-        for cmd in cmd_data[group]:
+        for cmd in self.command_data[group]:
             parser.add_argument(cmd["name"], type=cmd["type"], help=cmd["description"])
             for arg in args:
                 if arg.startswith(cmd["name"]):
                     fltr_args.append(arg)
         return parser.parse_args(fltr_args)
 
-    @staticmethod
-    def get_command_data(command_name: str) -> Dict:
+    def get_mtd_cls_inst(self, **kwargs):
         try:
-            return COMMANDS[command_name]
+            return self.command_data["class"](**kwargs)
         except KeyError:
-            raise CommandNotExistsError(
-                f"Command with name '{command_name}' does not exist."
-            )
+            return self
+        except ConfigurationError as e:
+            print(e)
+            self.print_args_info(self.command_data)
+            exit(1)
 
-    @classmethod
-    def get_method_class(cls, cmd_data: Dict):
-        try:
-            return cmd_data["class"]
-        except KeyError:
-            return cls
-
-    def handle_command(self, command_name: str, *args, **kwargs) -> None:
-        cmd_data = self.get_command_data(command_name)
-        cls_args = self.parse_args(cmd_data, "class_args", args)
-        mtd_args = self.parse_args(cmd_data, "method_args", args)
-        cmd_inst = self.get_method_class(cmd_data)(**cls_args.__dict__)
-        method = getattr(cmd_inst, command_name)
+    def handle_command(self, *args, **kwargs) -> None:
+        cls_args = self.parse_args("class_args", args)
+        mtd_args = self.parse_args("method_args", args)
+        cmd_inst = self.get_mtd_cls_inst(**cls_args.__dict__)
+        method = getattr(cmd_inst, self.command_name)
         method(**mtd_args.__dict__)
 
+    def run_command(self, command_name: str, *args, **kwargs) -> None:
+        try:
+            self.handle_command(command_name, *args)
+        except Exception as e:
+            print(e)
+
     @staticmethod
-    def help(*args, **kwargs) -> None:
-        # TODO finish
-        print("help")
+    def print_args_info(cmd_data: Dict) -> None:
+        for arg in cmd_data["class_args"]:
+            print(f"      {arg['name']}")
+            print(f"        {arg['description']}")
+        for arg in cmd_data["method_args"]:
+            print(f"      {arg['name']}")
+            print(f"        {arg['description']}")
+
+    @classmethod
+    def help(cls, *args, **kwargs) -> None:
+        print("Available commands:")
+        for cmd, data in COMMANDS.items():
+            print(f"  {cmd}")
+            print(f"    {data['description']}")
+            print(f"    arguments:")
+            cls.print_args_info(data)

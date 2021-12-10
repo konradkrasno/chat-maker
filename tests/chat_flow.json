@@ -44,12 +44,12 @@
         },
         "ClientAddress": {
             "BotPhrases": [
-                "What is your adress?"
+                "What is your address?"
             ],
             "UserPhrases": [
                 {
                     "UserPhraseMatch": {
-                        "Type": "Adress"
+                        "Type": "Address"
                     },
                     "SuccessNode": "End"
                 }

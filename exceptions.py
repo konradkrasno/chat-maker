@@ -10,9 +10,13 @@ class NodeExistsError(Exception):
     pass
 
 
-class ParserTypeNotExitstsError(Exception):
+class ParserTypeNotExistsError(Exception):
     pass
 
 
 class CommandNotExistsError(Exception):
+    pass
+
+
+class ConfigurationError(Exception):
     pass

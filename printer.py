@@ -1,5 +1,6 @@
 from loader import ChatLoader
 from chat import Chat
+from exceptions import ConfigurationError
 
 
 class Printer:
@@ -9,7 +10,7 @@ class Printer:
         elif chat:
             self.chat = chat
         else:
-            raise Exception("Printer improperly configured.")
+            raise ConfigurationError("Printer improperly configured.")
 
     def print_graph(self):
         current_node = self.chat.start_node
