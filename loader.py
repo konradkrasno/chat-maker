@@ -34,7 +34,7 @@ class ChatLoader(Chat):
                 name=key,
                 bot_phrases=val["BotPhrases"],
                 user_phrases=user_phrases,
-                fail_phrases=val.get("FailPhrases", [""])
+                fail_phrases=val.get("FailPhrases", [""]),
             )
             self.add_node(node)
 

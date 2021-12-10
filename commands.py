@@ -6,6 +6,8 @@ from exceptions import ConfigurationError
 
 from typing import Dict, Tuple
 
+from json.decoder import JSONDecodeError
+
 
 COMMANDS = {
     "print_graph": {
@@ -82,16 +84,16 @@ COMMANDS = {
                 "type": str,
                 "description": "???",
             },
-                        {
+            {
                 "name": "--user-phrase-type",
                 "type": str,
                 "description": "???",
             },
-                        {
+            {
                 "name": "--user-phrase-items",
                 "type": lambda s: s.split(","),
                 "description": "???",
-            }
+            },
         ],
     },
     # "remove_user_phrase": {
@@ -145,6 +147,9 @@ class CommandHandler:
     def run_command(self, command_name: str, *args, **kwargs) -> None:
         try:
             self.handle_command(command_name, *args)
+        except JSONDecodeError as e:
+            print(f"Input file improperly configured: {e}")
+            exit(1)
         except Exception as e:
             print(e)
 

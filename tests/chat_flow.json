@@ -1,84 +1,89 @@
 {
-    "ChatName": "TestChat",
-    "StartNode": "Start",
-    "Nodes": {
-        "Start": {
-            "BotPhrases": [
-                "Hello, how are you?",
-                "Hello, how can I help you?"
-            ],
-            "UserPhrases": [
-                {
-                    "UserPhraseMatch": {
-                        "Type": "ContainsItems",
-                        "Items": [
-                            "food",
-                            "restaurant",
-                            "meal",
-                            "lunch",
-                            "dinner"
-                        ]
-                    },
-                    "SuccessNode": "Order"
-                }
-            ],
-            "FailPhrases": [
-                "I can't understand. Could you tell it in different way?"
+  "ChatName": "TestChat",
+  "StartNode": "Start",
+  "Nodes": {
+    "Start": {
+      "BotPhrases": [
+        "Hello, how are you?",
+        "Hello, how can I help you?"
+      ],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "ContainsItems",
+            "Items": [
+              "food",
+              "restaurant",
+              "meal",
+              "lunch",
+              "dinner"
             ]
-        },
-        "Order": {
-            "BotPhrases": [
-                "What do you want to order?"
-            ],
-            "UserPhrases": [
-                {
-                    "UserPhraseMatch": {
-                        "Type": "SearchItem"
-                    },
-                    "SuccessNode": "ClientAddress"
-                }
-            ],
-            "FailPhrases": [
-                "I can't find this article in our menu :( Try something different."
-            ]
-        },
-        "ClientAddress": {
-            "BotPhrases": [
-                "What is your address?"
-            ],
-            "UserPhrases": [
-                {
-                    "UserPhraseMatch": {
-                        "Type": "Address"
-                    },
-                    "SuccessNode": "End"
-                }
-            ],
-            "FailPhrases": [
-                "I can't understand. Could you tell it in different way?"
-            ]
-        },
-        "End": {
-            "BotPhrases": [
-                "Thanks for ordering."
-            ]
-        },
-        "TestNode": {
-            "BotPhrases": [],
-            "UserPhrases": [
-                {
-                    "UserPhraseMatch": {
-                        "Type": "ContainsItems",
-                        "Items": [
-                            "test1",
-                            "test2",
-                            "test3"
-                        ]
-                    },
-                    "SuccessNode": "End"
-                }
-            ],
-            "FailPhrases": []
+          },
+          "SuccessNode": "Order"
         }
+      ],
+      "FailPhrases": [
+        "I can't understand. Could you tell it in different way?"
+      ]
+    },
+    "Order": {
+      "BotPhrases": [
+        "What do you want to order?"
+      ],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "SearchItem"
+          },
+          "SuccessNode": "ClientAddress"
+        }
+      ],
+      "FailPhrases": [
+        "I can't find this article in our menu :( Try something different."
+      ]
+    },
+    "ClientAddress": {
+      "BotPhrases": [
+        "What is your address?"
+      ],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "Address"
+          },
+          "SuccessNode": "End"
+        }
+      ],
+      "FailPhrases": [
+        "I can't understand. Could you tell it in different way?"
+      ]
+    },
+    "End": {
+      "BotPhrases": [
+        "Thanks for ordering."
+      ]
+    },
+    "TestNode": {
+      "BotPhrases": [],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "ContainsItems",
+            "Items": [
+              "test1",
+              "test2",
+              "test3"
+            ]
+          },
+          "SuccessNode": "End"
+        }
+      ],
+      "FailPhrases": []
+    },
+    "Test": {
+      "BotPhrases": [],
+      "UserPhrases": [],
+      "FailPhrases": []
     }
+  }
 }

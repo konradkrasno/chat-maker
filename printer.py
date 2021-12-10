@@ -21,7 +21,7 @@ class Printer:
             if current_node == "End":
                 break
 
-            prefix_count += len(current_node)//2
+            prefix_count += len(current_node) // 2
 
             node = self.chat.nodes[current_node]
             next_nodes = [phrase.success_node for phrase in node.user_phrases]

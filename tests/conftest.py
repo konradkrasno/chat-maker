@@ -25,28 +25,17 @@ def chat(chat_flow_file_path) -> ChatLoader:
 
 @fixture(scope="session")
 def user_answers() -> List:
-    return [
-        "fine, thanks",
-        "lunch",
-        "4240 Benson Park Drive",
-        ""
-    ]
+    return ["fine, thanks", "lunch", "4240 Benson Park Drive", ""]
 
 
 @fixture(scope="session")
 def answer_matchers() -> Dict:
     return {
-        "Start": {
-            "UserPhrase": "fine, thanks",
-            "Result": "fine, thanks"
-        },
-        "Order": {
-            "UserPhrase": "lunch",
-            "Result": "lunch"            
-        },
+        "Start": {"UserPhrase": "fine, thanks", "Result": "fine, thanks"},
+        "Order": {"UserPhrase": "lunch", "Result": "lunch"},
         "ClientAddress": {
             "UserPhrase": "4240 Benson Park Drive",
-            "Result": "4240 Benson Park Drive"
+            "Result": "4240 Benson Park Drive",
         },
     }
 

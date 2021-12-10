@@ -6,6 +6,7 @@ from exceptions import (
     UserPhraseTypeExistsError,
     NodeNotExistsError,
     NodeExistsError,
+    ConfigurationError,
 )
 
 from typing import List
@@ -13,7 +14,10 @@ from typing import List
 
 class ChatEditor:
     def __init__(self, file_path: str) -> None:
-        self.file_path = file_path
+        if file_path:
+            self.file_path = file_path
+        else:
+            raise ConfigurationError("Chat editor improperly configured.")
 
     def load_chat_obj(self) -> json:
         with open(self.file_path, "r") as file:
@@ -24,6 +28,9 @@ class ChatEditor:
             json.dump(_object, file)
 
     def add_node(self, node_name: str) -> None:
+        if not node_name:
+            raise ConfigurationError("Node name can not be empty.")
+
         chat_obj = self.load_chat_obj()
 
         if node_name in chat_obj["Nodes"]:
@@ -38,6 +45,9 @@ class ChatEditor:
         print(f"Successfully created node '{node_name}'.")
 
     def remove_node(self, node_name: str) -> None:
+        if not node_name:
+            raise ConfigurationError("Node name can not be empty.")
+
         chat_obj = self.load_chat_obj()
         try:
             del chat_obj["Nodes"][node_name]

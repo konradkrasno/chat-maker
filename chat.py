@@ -76,7 +76,7 @@ class Chat:
     def get_user_phrase(self, node: Node) -> str:
         user_phrase = input()
         return node.match_user_phrase(user_response=user_phrase)
-    
+
     def check_consistence(self):
         # Checks if all nodes have propriete successors and the last node is End node.
         # TODO finish
