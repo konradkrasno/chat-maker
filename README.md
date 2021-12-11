@@ -17,5 +17,4 @@ chatmaker add_user_phrase \
     --success-node=End \
     --user-phrase-type=ContainsItems \
     --user-phrase-items=test1,test2,test3
-
 ```

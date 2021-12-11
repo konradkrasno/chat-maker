@@ -10,6 +10,11 @@ from json.decoder import JSONDecodeError
 
 
 COMMANDS = {
+    "help": {
+        "description": "Prints available commands with descriptions.",
+        "class_args": [],
+        "method_args": [],
+    },
     "print_graph": {
         "description": "Command for printing tree of nodes.",
         "class": Printer,
@@ -58,11 +63,6 @@ COMMANDS = {
             }
         ],
     },
-    "help": {
-        "description": "Prints available commands with descriptions.",
-        "class_args": [],
-        "method_args": [],
-    },
     "add_user_phrase": {
         "description": "Command for new UserPhrase object.",
         "class": ChatEditor,
@@ -82,17 +82,17 @@ COMMANDS = {
             {
                 "name": "--success-node",
                 "type": str,
-                "description": "???",
+                "description": "Provides name of node which is the next after success in current node.",
             },
             {
                 "name": "--user-phrase-type",
                 "type": str,
-                "description": "???",
+                "description": "Provides type of user phrase.",
             },
             {
                 "name": "--user-phrase-items",
                 "type": lambda s: s.split(","),
-                "description": "???",
+                "description": "Provides list of user phrase items, usage: item1,item2,item3",
             },
         ],
     },

@@ -36,6 +36,13 @@
             "Type": "SearchItem"
           },
           "SuccessNode": "ClientAddress"
+        },
+        {
+          "UserPhraseMatch": {
+            "Type": "Time",
+            "Items": null
+          },
+          "SuccessNode": "Test"
         }
       ],
       "FailPhrases": [
@@ -82,7 +89,15 @@
     },
     "Test": {
       "BotPhrases": [],
-      "UserPhrases": [],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "Time",
+            "Items": null
+          },
+          "SuccessNode": "End"
+        }
+      ],
       "FailPhrases": []
     }
   }

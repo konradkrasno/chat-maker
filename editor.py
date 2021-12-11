@@ -70,6 +70,12 @@ class ChatEditor:
         user_phrase_items: List = [],
     ) -> None:
         chat_obj = self.load_chat_obj()
+        if not edited_node:
+            raise ConfigurationError("Edited node name not provided.")
+        if not success_node:
+            raise ConfigurationError("Success node name not provided.")
+        if not user_phrase_type:
+            raise ConfigurationError("User phrase type not provided.")
 
         try:
             user_phrases = chat_obj["Nodes"][edited_node]["UserPhrases"]
