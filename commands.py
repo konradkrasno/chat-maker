@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 from editor import ChatEditor
 from printer import Printer
@@ -14,6 +15,17 @@ COMMANDS = {
         "description": "Prints available commands with descriptions.",
         "class_args": [],
         "method_args": [],
+    },
+    "config": {
+        "description": "Creates file with chat basic configuration.",
+        "class_args": [],
+        "method_args": [
+            {
+                "name": "--chat-file-path",
+                "type": str,
+                "description": "Provides path for chat logic json file.",
+            }
+        ],
     },
     "print_graph": {
         "description": "Command for printing tree of nodes.",
@@ -132,10 +144,6 @@ class CommandHandler:
             return self.command_data["class"](**kwargs)
         except KeyError:
             return self
-        except ConfigurationError as e:
-            print(e)
-            self.print_args_info(self.command_data)
-            exit(1)
 
     def handle_command(self, *args, **kwargs) -> None:
         cls_args = self.parse_args("class_args", args)
@@ -149,7 +157,9 @@ class CommandHandler:
             self.handle_command(command_name, *args)
         except JSONDecodeError as e:
             print(f"Input file improperly configured: {e}")
-            exit(1)
+        except ConfigurationError as e:
+            print(e)
+            self.print_args_info(self.command_data)
         except Exception as e:
             print(e)
 
@@ -170,3 +180,13 @@ class CommandHandler:
             print(f"    {data['description']}")
             print(f"    arguments:")
             cls.print_args_info(data)
+
+    @classmethod
+    def config(cls, *args, **kwargs):
+        file_path = kwargs.get("chat_file_path")
+        if not file_path:
+            raise ConfigurationError("Path to chat structure file not provided.")
+
+        Path('./.config').touch(exist_ok=True)
+        with open("./.config", "w") as file:
+            file.write(f"chat_file_path={file_path}")

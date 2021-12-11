@@ -1,6 +1,6 @@
 ### TODO
 
-- [ ] config file
+- [x] config file
 - [ ] remove_user_phrase func and command
 - [ ] change_success_node func and command
 - [ ] get nodes command
