@@ -76,7 +76,6 @@ class ChatEditor:
         user_phrase_type: str,
         user_phrase_items: List = [],
     ) -> None:
-        chat_obj = self.load_chat_obj()
         if not edited_node:
             raise ConfigurationError("Edited node name not provided.")
         if not success_node:
@@ -84,6 +83,7 @@ class ChatEditor:
         if not user_phrase_type:
             raise ConfigurationError("User phrase type not provided.")
 
+        chat_obj = self.load_chat_obj()
         try:
             user_phrases = chat_obj["Nodes"][edited_node]["UserPhrases"]
         except KeyError:
@@ -91,14 +91,14 @@ class ChatEditor:
                 f"Node with name: '{edited_node}' does not exists. Add new node first."
             )
 
-        if success_node not in chat_obj["Nodes"].keys():
-            raise NodeNotExistsError(
-                f"Node with name: '{success_node}' does not exists. Add new node first."
-            )
-
         if user_phrase_type not in UserPhraseParserMapping.keys():
             raise ParserTypeNotExistsError(
                 f"UserPhrase parser type: '{user_phrase_type}' not exists."
+            )
+
+        if success_node not in chat_obj["Nodes"].keys():
+            raise NodeNotExistsError(
+                f"Node with name: '{success_node}' does not exists. Add new node first."
             )
 
         for phrase in user_phrases:
@@ -112,14 +112,27 @@ class ChatEditor:
             "SuccessNode": success_node,
         }
         user_phrases.append(new_phrase)
-        # chat_obj["Nodes"][edited_node]["UserPhrases"] = user_phrases
         self.dump_chat_obj(chat_obj)
 
     def remove_user_phrase(
-        self, edited_node: str, user_phrase_type: str, success_node: str
+        self, edited_node: str, user_phrase_type: str
     ) -> None:
-        # TODO finish
-        pass
+        if not edited_node:
+            raise ConfigurationError("Edited node name not provided.")
+        if not user_phrase_type:
+            raise ConfigurationError("User phrase type not provided.")
+
+        chat_obj = self.load_chat_obj()
+        try:
+            user_phrases = chat_obj["Nodes"][edited_node]["UserPhrases"]
+        except KeyError:
+            raise NodeNotExistsError(
+                f"Node with name: '{edited_node}' does not exists."
+            )
+
+        filtered_phrases = [item for item in user_phrases if item["UserPhraseMatch"]["Type"] != user_phrase_type]
+        chat_obj["Nodes"][edited_node]["UserPhrases"] = filtered_phrases
+        self.dump_chat_obj(chat_obj)
 
     def change_success_node(
         self,

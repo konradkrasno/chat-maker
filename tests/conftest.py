@@ -43,3 +43,9 @@ def answer_matchers() -> Dict:
 @fixture(scope="session")
 def editor(chat_flow_file_path) -> ChatEditor:
     return ChatEditor(file_path=chat_flow_file_path)
+
+
+@fixture(scope="session")
+def test_data() -> json:
+    with open("./tests/test_data.json", "r") as file:
+        return json.load(file)

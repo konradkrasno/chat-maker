@@ -12,4 +12,4 @@ if __name__ == "__main__":
         CommandHandler.help()
     else:
         handler = CommandHandler(command)
-        handler.run_command(command, *args[1:])
+        handler.run_command(*args[1:])

@@ -70,4 +70,4 @@ def test_add_user_phrase_with_success(editor):
                 and phrase["SuccessNode"] == success_node
             ):
                 return True
-    raise Exception("An error occured while adding data to user phrase")
+    raise Exception("An error occurred while adding data to user phrase")

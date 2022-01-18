@@ -108,9 +108,29 @@ COMMANDS = {
             },
         ],
     },
-    # "remove_user_phrase": {
-    #     "description": "Command for removing UserPhrase object."
-    # },
+    "remove_user_phrase": {
+        "description": "Command for removing UserPhrase object.",
+        "class": ChatEditor,
+        "class_args": [
+            {
+                "name": "--file-path",
+                "type": str,
+                "description": "Provides path to file to be edited.",
+            }
+        ],
+        "method_args": [
+            {
+                "name": "--edited-node",
+                "type": str,
+                "description": "Determines node for editing.",
+            },
+            {
+                "name": "--user-phrase-type",
+                "type": str,
+                "description": "Provides type of user phrase.",
+            }
+        ]
+    },
     # "change_success_node": {
     #     "description": ""
     # }
@@ -152,16 +172,16 @@ class CommandHandler:
         method = getattr(cmd_inst, self.command_name)
         method(**mtd_args.__dict__)
 
-    def run_command(self, command_name: str, *args, **kwargs) -> None:
+    def run_command(self, *args, **kwargs) -> None:
         try:
-            self.handle_command(command_name, *args)
+            self.handle_command(self.command_name, *args)
         except JSONDecodeError as e:
             print(f"Input file improperly configured: {e}")
         except ConfigurationError as e:
-            print(e)
+            print(e.__str__())
             self.print_args_info(self.command_data)
         except Exception as e:
-            print(e)
+            print(e.__str__())
 
     @staticmethod
     def print_args_info(cmd_data: Dict) -> None:
