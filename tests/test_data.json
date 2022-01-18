@@ -18,5 +18,65 @@
         "check_code": "with open('./.config', 'r') as f:\n    assert f.readline() == 'chat_file_path=./tests/chat_flow.json'"
       }
     }
+  ],
+  "add_node": [
+    {
+      "class_args": [],
+      "method_args": [],
+      "result": {
+        "print_calls": [
+          "Node name can not be empty.",
+          "      --file-path",
+          "        Provides path to file to be edited.",
+          "      --node-name",
+          "        Provides new node name."
+        ]
+      }
+    },
+    {
+      "class_args": [],
+      "method_args": ["--node-name=TestNode"],
+      "result": {
+        "print_calls": [
+          "Successfully created node 'TestNode'."
+        ],
+        "check_code": "with open('./tests/chat_flow.json', 'r') as f:\n    assert 'TestNode' in f.read()"
+      }
+    },
+    {
+      "class_args": [],
+      "method_args": ["--node-name=TestNode"],
+      "result": {
+        "print_calls": [
+          "Node with name 'TestNode' already exists."
+        ],
+        "check_code": "with open('./tests/chat_flow.json', 'r') as f:\n    assert 'TestNode' in f.read()"
+      }
+    }
+  ],
+  "remove_node": [
+    {
+      "class_args": [],
+      "method_args": [],
+      "result": {
+        "print_calls": [
+          "Node name can not be empty.",
+          "      --file-path",
+          "        Provides path to file to be edited.",
+          "      --node-name",
+          "        Provides new node name."
+        ]
+      }
+    },
+    {
+      "class_args": [],
+      "method_args": ["--node-name=TestNode"],
+      "result": {
+        "print_calls": [
+          "Successfully deleted node 'TestNode'."
+        ],
+        "check_code": "with open('./tests/chat_flow.json', 'r') as f:\n    assert 'TestNode' not in f.read()"
+      }
+    }
   ]
 }

@@ -63,29 +63,7 @@
         "Thanks for ordering."
       ]
     },
-    "TestNode": {
-      "BotPhrases": [],
-      "UserPhrases": [
-        {
-          "UserPhraseMatch": {
-            "Type": "ContainsItems",
-            "Items": [
-              "test1",
-              "test2",
-              "test3"
-            ]
-          },
-          "SuccessNode": "End"
-        }
-      ],
-      "FailPhrases": []
-    },
     "Test": {
-      "BotPhrases": [],
-      "UserPhrases": [],
-      "FailPhrases": []
-    },
-    "NewTestNode": {
       "BotPhrases": [],
       "UserPhrases": [],
       "FailPhrases": []
