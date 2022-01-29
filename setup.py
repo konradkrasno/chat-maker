@@ -6,5 +6,5 @@ setup(
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     python_requires=">=3.6",
-    entry_points={"console_scripts": ["chat_maker = chat_maker.main:main"]},
+    entry_points={"console_scripts": ["chatmaker = chat_maker.main:main"]},
 )

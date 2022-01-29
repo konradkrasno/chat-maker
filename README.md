@@ -6,8 +6,6 @@ make build
 ```
 ### Configuration
 ```
-alias chatmaker="python3 chat_maker.py"
-
 chatmaker config --chat-file-path=./tests/chat_flow.json
 ```
 
