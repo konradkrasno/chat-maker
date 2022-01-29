@@ -7,3 +7,7 @@ venv/
 
 # chatmaker
 .config
+
+# dist files
+chat_maker.egg-info/
+dist/
