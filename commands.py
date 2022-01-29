@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 
 from editor import ChatEditor
-from printer import Printer
+from printer import GraphPrinter
 from exceptions import ConfigurationError
 
 from typing import Dict, Tuple
@@ -29,7 +29,7 @@ COMMANDS = {
     },
     "print_graph": {
         "description": "Command for printing tree of nodes.",
-        "class": Printer,
+        "class": GraphPrinter,
         "class_args": [
             {
                 "name": "--file-path",
@@ -128,8 +128,8 @@ COMMANDS = {
                 "name": "--user-phrase-type",
                 "type": str,
                 "description": "Provides type of user phrase.",
-            }
-        ]
+            },
+        ],
     },
     # "change_success_node": {
     #     "description": ""
@@ -207,6 +207,6 @@ class CommandHandler:
         if not file_path:
             raise ConfigurationError("Path to chat structure file not provided.")
 
-        Path('./.config').touch(exist_ok=True)
+        Path("./.config").touch(exist_ok=True)
         with open("./.config", "w") as file:
             file.write(f"chat_file_path={file_path}")

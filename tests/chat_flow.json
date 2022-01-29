@@ -19,14 +19,30 @@
               "dinner"
             ]
           },
-          "SuccessNode": "Order"
+          "SuccessNode": "Food"
+        },
+        {
+        "UserPhraseMatch": {
+          "Type": "ContainsItems",
+          "Items": [
+          ]
+          },
+        "SuccessNode": "Restaurant"
+        },
+        {
+        "UserPhraseMatch": {
+          "Type": "ContainsItems",
+          "Items": [
+          ]
+          },
+        "SuccessNode": "Shopping"
         }
       ],
       "FailPhrases": [
         "I can't understand. Could you tell it in different way?"
       ]
     },
-    "Order": {
+    "Food": {
       "BotPhrases": [
         "What do you want to order?"
       ],
@@ -36,6 +52,52 @@
             "Type": "SearchItem"
           },
           "SuccessNode": "ClientAddress"
+        }
+      ],
+      "FailPhrases": [
+        "I can't find this article in our menu :( Try something different."
+      ]
+    },
+    "Restaurant": {
+      "BotPhrases": [
+        "What restaurant are you interested in?"
+      ],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "SearchItem"
+          },
+          "SuccessNode": "ClientAddress"
+        },
+        {
+          "UserPhraseMatch": {
+            "Type": "Address",
+            "Items": null
+          },
+          "SuccessNode": "AdditionalAddress"
+        }
+      ],
+      "FailPhrases": [
+        "I can't find this article in our menu :( Try something different."
+      ]
+    },
+    "Shopping": {
+      "BotPhrases": [
+        "What articles do you need?"
+      ],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "SearchItem"
+          },
+          "SuccessNode": "ClientAddress"
+        },
+        {
+          "UserPhraseMatch": {
+            "Type": "Address",
+            "Items": null
+          },
+          "SuccessNode": "AdditionalAddress"
         }
       ],
       "FailPhrases": [
@@ -63,9 +125,19 @@
         "Thanks for ordering."
       ]
     },
-    "Test": {
-      "BotPhrases": [],
-      "UserPhrases": [],
+    "AdditionalAddress": {
+      "BotPhrases": [
+        "What is your additional address?"
+      ],
+      "UserPhrases": [
+        {
+          "UserPhraseMatch": {
+            "Type": "Address",
+            "Items": null
+          },
+          "SuccessNode": "End"
+        }
+      ],
       "FailPhrases": []
     }
   }

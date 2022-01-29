@@ -114,9 +114,7 @@ class ChatEditor:
         user_phrases.append(new_phrase)
         self.dump_chat_obj(chat_obj)
 
-    def remove_user_phrase(
-        self, edited_node: str, user_phrase_type: str
-    ) -> None:
+    def remove_user_phrase(self, edited_node: str, user_phrase_type: str) -> None:
         if not edited_node:
             raise ConfigurationError("Edited node name not provided.")
         if not user_phrase_type:
@@ -130,7 +128,11 @@ class ChatEditor:
                 f"Node with name: '{edited_node}' does not exists."
             )
 
-        filtered_phrases = [item for item in user_phrases if item["UserPhraseMatch"]["Type"] != user_phrase_type]
+        filtered_phrases = [
+            item
+            for item in user_phrases
+            if item["UserPhraseMatch"]["Type"] != user_phrase_type
+        ]
         chat_obj["Nodes"][edited_node]["UserPhrases"] = filtered_phrases
         self.dump_chat_obj(chat_obj)
 

@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from user_phrase_parser import UserPhraseParserMapping
 from random import choice
 
@@ -15,6 +15,9 @@ class Node:
         self.bot_phrases = bot_phrases
         self.user_phrases = user_phrases
         self.fail_phrases = fail_phrases
+
+    def __repr__(self):
+        return self.name
 
     def add_user_phrase(self, phrase: "UserPhrase") -> None:
         self.user_phrases.append(phrase)
@@ -47,14 +50,17 @@ class Node:
 
 
 class UserPhrase:
-    def __init__(self, success_node: str, match_type: str, items: List = []) -> None:
+    def __init__(self, success_node: str, match_type: str, items: Tuple = ()) -> None:
         self.success_node = success_node
         self.match_parser = UserPhraseParserMapping[match_type]
         self.items = items
 
+    def __repr__(self):
+        return f"<SuccessNode>:{self.success_node}<MathParser>:{self.match_parser}<Items>{self.items}"
+
 
 class Chat:
-    def __init__(self, name: str, start_node: Node) -> None:
+    def __init__(self, name: str, start_node: str) -> None:
         self.name = name
         self.start_node = start_node
         self.current_node_name = start_node
@@ -70,15 +76,17 @@ class Chat:
     def remove_node(self, node: Node) -> None:
         del self.nodes[node.name]
 
-    def get_bot_phrase(self, node: Node) -> None:
+    @staticmethod
+    def get_bot_phrase(node: Node) -> None:
         print(choice(node.bot_phrases))
 
-    def get_user_phrase(self, node: Node) -> str:
+    @staticmethod
+    def get_user_phrase(node: Node) -> Dict:
         user_phrase = input()
         return node.match_user_phrase(user_response=user_phrase)
 
     def check_consistence(self):
-        # Checks if all nodes have propriete successors and the last node is End node.
+        # Checks if all nodes have appropriate successors and the last node is End node.
         # TODO finish
         pass
 
