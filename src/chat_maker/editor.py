@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
+from typing import List
 
-from user_phrase_parser import UserPhraseParserMapping
-from exceptions import (
+from chat_maker.user_phrase_parser import UserPhraseParserMapping
+from chat_maker.exceptions import (
     ParserTypeNotExistsError,
     UserPhraseTypeExistsError,
     NodeNotExistsError,
@@ -10,15 +11,13 @@ from exceptions import (
     ConfigurationError,
 )
 
-from typing import List
-
 
 class ChatEditor:
     def __init__(self, file_path: str) -> None:
         if file_path:
             self.file_path = file_path
-        elif Path("./.config").exists():
-            with open("./.config", "r") as file:
+        elif Path("../../.config").exists():
+            with open("../../.config", "r") as file:
                 lines = file.readlines()
                 for line in lines:
                     if "chat_file_path" in line:

@@ -1,6 +1,7 @@
 from typing import Dict, List, Tuple
-from user_phrase_parser import UserPhraseParserMapping
 from random import choice
+
+from chat_maker.user_phrase_parser import UserPhraseParserMapping
 
 
 class Node:

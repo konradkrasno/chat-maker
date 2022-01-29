@@ -1,13 +1,11 @@
 import argparse
 from pathlib import Path
-
-from editor import ChatEditor
-from printer import GraphPrinter
-from exceptions import ConfigurationError
-
 from typing import Dict, Tuple
-
 from json.decoder import JSONDecodeError
+
+from chat_maker.editor import ChatEditor
+from chat_maker.printer import GraphPrinter
+from chat_maker.exceptions import ConfigurationError
 
 
 COMMANDS = {
@@ -207,6 +205,6 @@ class CommandHandler:
         if not file_path:
             raise ConfigurationError("Path to chat structure file not provided.")
 
-        Path("./.config").touch(exist_ok=True)
-        with open("./.config", "w") as file:
+        Path("../../.config").touch(exist_ok=True)
+        with open("../../.config", "w") as file:
             file.write(f"chat_file_path={file_path}")

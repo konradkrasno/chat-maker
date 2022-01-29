@@ -2,9 +2,10 @@ import json
 from typing import Dict, List
 
 import pytest
-from loader import ChatLoader
-from editor import ChatEditor
 from pytest import fixture
+
+from chat_maker.loader import ChatLoader
+from chat_maker.editor import ChatEditor
 
 
 @fixture(scope="session")

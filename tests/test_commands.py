@@ -1,5 +1,6 @@
 from unittest.mock import patch, call
-from commands import CommandHandler
+
+from chat_maker.commands import CommandHandler
 
 
 def test_command_handler(test_data):

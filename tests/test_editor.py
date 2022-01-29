@@ -1,6 +1,6 @@
 import pytest
 from unittest import mock
-from exceptions import (
+from chat_maker.exceptions import (
     UserPhraseTypeExistsError,
     NodeNotExistsError,
     NodeExistsError,
@@ -14,7 +14,7 @@ def test_add_node_with_node_exists_error(editor):
 
 
 def test_add_node(editor):
-    with mock.patch("editor.ChatEditor.dump_chat_obj") as mocked_dump:
+    with mock.patch("chat_maker.editor.ChatEditor.dump_chat_obj") as mocked_dump:
         editor.add_node("new_node")
         result = mocked_dump.call_args.args[0]
         assert "new_node" in result["Nodes"]
@@ -61,7 +61,7 @@ def test_add_user_phrase_with_success(editor):
     success_node = "End"
     user_phrase_type = "Time"
 
-    with mock.patch("editor.ChatEditor.dump_chat_obj") as mocked_dump:
+    with mock.patch("chat_maker.editor.ChatEditor.dump_chat_obj") as mocked_dump:
         editor.add_user_phrase(edited_node, success_node, user_phrase_type)
         result = mocked_dump.call_args.args[0]
         for phrase in result["Nodes"][edited_node]["UserPhrases"]:

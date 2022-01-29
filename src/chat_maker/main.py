@@ -1,9 +1,9 @@
 import sys
 
-from commands import CommandHandler
+from chat_maker.commands import CommandHandler
 
 
-if __name__ == "__main__":
+def main():
     args = sys.argv[1:]
     try:
         command = args[0]

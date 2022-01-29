@@ -1,6 +1,7 @@
 import json
-from chat import Chat, Node, UserPhrase
 from typing import List
+
+from chat_maker.chat import Chat, Node, UserPhrase
 
 
 class ChatLoader(Chat):

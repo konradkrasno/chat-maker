@@ -2,9 +2,9 @@ from typing import List
 
 from pathlib import Path
 
-from loader import ChatLoader
-from chat import Chat
-from exceptions import ConfigurationError
+from chat_maker.loader import ChatLoader
+from chat_maker.chat import Chat
+from chat_maker.exceptions import ConfigurationError
 
 
 class Printer:
@@ -13,8 +13,8 @@ class Printer:
             self.chat = chat
         elif file_path:
             self.chat = ChatLoader(logic_file_path=file_path)
-        elif Path("./.config").exists():
-            with open("./.config", "r") as file:
+        elif Path("../../.config").exists():
+            with open("../../.config", "r") as file:
                 lines = file.readlines()
                 for line in lines:
                     if "chat_file_path" in line:
@@ -44,7 +44,7 @@ class GraphPrinter(Printer):
 
     @staticmethod
     def get_line_width(item: List) -> int:
-        spaces = (len(item) - 1)
+        spaces = len(item) - 1
         width = spaces
         width += sum((len(word) for word in item))
         return width
@@ -78,7 +78,7 @@ class GraphPrinter(Printer):
         for i, items in enumerate(tree):
             if i > 0:
                 pass
-                    # print(next_nodes)
+                # print(next_nodes)
                 # if len(item) == 1 and len(tree[i-1]) == 1:
                 #     whitespaces = " " * (max_width//2)
                 #     print(whitespaces, "|")
@@ -86,7 +86,7 @@ class GraphPrinter(Printer):
                 #     whitespaces = " " * (max_width//2 - 1)
                 #     print(whitespaces, "/ \\")
 
-            whitespaces = " " * (max_width//2 - self.get_line_width(items)//2)
+            whitespaces = " " * (max_width // 2 - self.get_line_width(items) // 2)
             # print(whitespaces, *items)
 
             for item in items:
