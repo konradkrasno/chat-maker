@@ -1,30 +1,44 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List
 from random import choice
 
 from chat_maker.user_phrase_parser import UserPhraseParserMapping
+
+
+class UserPhrase:
+    def __init__(
+        self, name, success_node: str, match_type: str, items: List = None
+    ) -> None:
+        self.name = name
+        self.success_node = success_node
+        self.match_type = match_type
+        self.items = items if items else list()
+        self.match_parser = UserPhraseParserMapping[match_type]
+
+    def __repr__(self):
+        return f"<SuccessNode>:{self.success_node}<MathType>:{self.match_type}<Items>{self.items}"
 
 
 class Node:
     def __init__(
         self,
         name: str,
-        bot_phrases: List[str],
-        user_phrases: List["UserPhrase"],
-        fail_phrases: List[str],
+        bot_phrases: List[str] = None,
+        user_phrases: Dict = None,
+        fail_phrases: List[str] = None,
     ) -> None:
         self.name = name
-        self.bot_phrases = bot_phrases
-        self.user_phrases = user_phrases
-        self.fail_phrases = fail_phrases
+        self.bot_phrases = bot_phrases if bot_phrases else list()
+        self.user_phrases = user_phrases if user_phrases else dict()
+        self.fail_phrases = fail_phrases if fail_phrases else list()
 
     def __repr__(self):
         return self.name
 
-    def add_user_phrase(self, phrase: "UserPhrase") -> None:
-        self.user_phrases.append(phrase)
+    def add_user_phrase(self, name: str, phrase: "UserPhrase") -> None:
+        self.user_phrases[name] = phrase
 
-    def remove_user_phrase(self, phrase: "UserPhrase") -> None:
-        self.user_phrases.remove(phrase)
+    def remove_user_phrase(self, name: str) -> None:
+        self.user_phrases.__delitem__(name)
 
     def add_bot_phrase(self, phrase: str) -> None:
         self.bot_phrases.append(phrase)
@@ -39,7 +53,7 @@ class Node:
         self.fail_phrases.remove(phrase)
 
     def match_user_phrase(self, user_response: str) -> Dict:
-        for user_phrase in self.user_phrases:
+        for user_phrase in self.user_phrases.values():
             parser = user_phrase.match_parser(user_response)
             result = parser.parse()
             if result:
@@ -50,22 +64,13 @@ class Node:
         return {"result": choice(self.fail_phrases), "next_node": self.name}
 
 
-class UserPhrase:
-    def __init__(self, success_node: str, match_type: str, items: Tuple = ()) -> None:
-        self.success_node = success_node
-        self.match_parser = UserPhraseParserMapping[match_type]
-        self.items = items
-
-    def __repr__(self):
-        return f"<SuccessNode>:{self.success_node}<MathParser>:{self.match_parser}<Items>{self.items}"
-
-
 class Chat:
-    def __init__(self, name: str, start_node: str) -> None:
+    def __init__(self, chat_id: str, name: str, start_node: str, nodes: Dict) -> None:
+        self.chat_id = chat_id
         self.name = name
         self.start_node = start_node
         self.current_node_name = start_node
-        self.nodes = {}
+        self.nodes = nodes
 
     @property
     def current_node(self) -> Node:
@@ -74,8 +79,8 @@ class Chat:
     def add_node(self, node: Node) -> None:
         self.nodes[node.name] = node
 
-    def remove_node(self, node: Node) -> None:
-        del self.nodes[node.name]
+    def del_node(self, node_name: str) -> None:
+        del self.nodes[node_name]
 
     @staticmethod
     def get_bot_phrase(node: Node) -> None:

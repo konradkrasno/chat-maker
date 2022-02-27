@@ -18,34 +18,40 @@ COMMANDS = {
         "description": "Creates file with chat basic configuration.",
         "class_args": [],
         "method_args": [
-            {
-                "name": "--chat-file-path",
-                "type": str,
-                "description": "Provides path for chat logic json file.",
-            }
+            {"name": "--chat-id", "type": str, "description": "Provides chat id."}
         ],
     },
-    "print_graph": {
-        "description": "Command for printing tree of nodes.",
-        "class": GraphPrinter,
-        "class_args": [
-            {
-                "name": "--file-path",
-                "type": str,
-                "description": "Provides path for chat logic json file.",
-            }
-        ],
-        "method_args": [],
-    },
-    "add_node": {
+    # "print_graph": {
+    #     "description": "Command for printing tree of nodes.",
+    #     "class": GraphPrinter,
+    #     "class_args": [
+    #         {
+    #             "name": "--chat-id",
+    #             "type": str,
+    #             "description": "Provides chat id.",
+    #         }
+    #     ],
+    #     "method_args": [],
+    # },
+    "create_node": {
         "description": "Command for adding new node.",
         "class": ChatEditor,
         "class_args": [
             {
-                "name": "--file-path",
+                "name": "--chat-id",
                 "type": str,
-                "description": "Provides path to file to be edited.",
-            }
+                "description": "Provides chat id.",
+            },
+            {
+                "name": "--from-dynamodb",
+                "type": bool,
+                "description": "Determines if DynamoDb will be using.",
+            },
+            {
+                "name": "--aws-region",
+                "type": str,
+                "description": "Provides aws region.",
+            },
         ],
         "method_args": [
             {
@@ -59,11 +65,17 @@ COMMANDS = {
         "description": "Command for deleting node.",
         "class": ChatEditor,
         "class_args": [
+            {"name": "--chat-id", "type": str, "description": "Provides chat id."},
             {
-                "name": "--file-path",
+                "name": "--from-dynamodb",
+                "type": bool,
+                "description": "Determines if DynamoDb will be using.",
+            },
+            {
+                "name": "--aws-region",
                 "type": str,
-                "description": "Provides path to file to be edited.",
-            }
+                "description": "Provides aws region.",
+            },
         ],
         "method_args": [
             {
@@ -77,17 +89,28 @@ COMMANDS = {
         "description": "Command for new UserPhrase object.",
         "class": ChatEditor,
         "class_args": [
+            {"name": "--chat-id", "type": str, "description": "Provides chat id."},
             {
-                "name": "--file-path",
+                "name": "--from-dynamodb",
+                "type": bool,
+                "description": "Determines if DynamoDb will be using.",
+            },
+            {
+                "name": "--aws-region",
                 "type": str,
-                "description": "Provides path to file to be edited.",
-            }
+                "description": "Provides aws region.",
+            },
         ],
         "method_args": [
             {
                 "name": "--edited-node",
                 "type": str,
                 "description": "Determines node for editing.",
+            },
+            {
+                "name": "--user-phrase-name",
+                "type": str,
+                "description": "Determines user phrase name.",
             },
             {
                 "name": "--success-node",
@@ -111,10 +134,20 @@ COMMANDS = {
         "class": ChatEditor,
         "class_args": [
             {
-                "name": "--file-path",
+                "name": "--chat-id",
                 "type": str,
-                "description": "Provides path to file to be edited.",
-            }
+                "description": "Provides chat id.",
+            },
+            {
+                "name": "--from-dynamodb",
+                "type": bool,
+                "description": "Determines if DynamoDb will be using.",
+            },
+            {
+                "name": "--aws-region",
+                "type": str,
+                "description": "Provides aws region.",
+            },
         ],
         "method_args": [
             {
@@ -123,9 +156,9 @@ COMMANDS = {
                 "description": "Determines node for editing.",
             },
             {
-                "name": "--user-phrase-type",
+                "name": "--user-phrase-name",
                 "type": str,
-                "description": "Provides type of user phrase.",
+                "description": "Provides type of user phrase name.",
             },
         ],
     },
@@ -158,10 +191,10 @@ class CommandHandler:
         return parser.parse_args(fltr_args)
 
     def get_mtd_cls_inst(self, **kwargs):
-        try:
-            return self.command_data["class"](**kwargs)
-        except KeyError:
-            return self
+        inst = self.command_data.get("class")
+        if inst:
+            return inst(**kwargs)
+        return self
 
     def handle_command(self, *args, **kwargs) -> None:
         cls_args = self.parse_args("class_args", args)
@@ -178,8 +211,8 @@ class CommandHandler:
         except ConfigurationError as e:
             print(e.__str__())
             self.print_args_info(self.command_data)
-        except Exception as e:
-            print(e.__str__())
+        # except Exception as e:
+        #     print(e.__str__())
 
     @staticmethod
     def print_args_info(cmd_data: Dict) -> None:
@@ -201,10 +234,10 @@ class CommandHandler:
 
     @classmethod
     def config(cls, *args, **kwargs):
-        file_path = kwargs.get("chat_file_path")
-        if not file_path:
-            raise ConfigurationError("Path to chat structure file not provided.")
+        chat_id = kwargs.get("chat_id")
+        if not chat_id:
+            raise ConfigurationError("Chat id not provided.")
 
-        Path("../../.config").touch(exist_ok=True)
-        with open("../../.config", "w") as file:
-            file.write(f"chat_file_path={file_path}")
+        Path("../.config").touch(exist_ok=True)
+        with open("../.config", "w") as file:
+            file.write(f"chat_id={chat_id}")

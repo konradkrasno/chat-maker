@@ -1,73 +1,71 @@
 import pytest
 from unittest import mock
 from chat_maker.exceptions import (
-    UserPhraseTypeExistsError,
     NodeNotExistsError,
     NodeExistsError,
     ParserTypeNotExistsError,
 )
 
 
-def test_add_node_with_node_exists_error(editor):
+def test_create_node_with_node_exists_error(editor):
     with pytest.raises(NodeExistsError):
-        editor.add_node("Order")
+        editor.create_node("Order")
 
 
-def test_add_node(editor):
-    with mock.patch("chat_maker.editor.ChatEditor.dump_chat_obj") as mocked_dump:
-        editor.add_node("new_node")
-        result = mocked_dump.call_args.args[0]
-        assert "new_node" in result["Nodes"]
+def test_create_node(editor):
+    with mock.patch("chat_maker.editor.ChatEditor.dump_chat") as mocked_dump:
+        editor.create_node("new_node")
+        assert "new_node" in editor.chat.nodes
 
 
 def test_remove_node(editor):
     pass
 
 
-def test_add_user_phrase_with_user_phrase_type_exists_exception(editor):
-    with pytest.raises(UserPhraseTypeExistsError):
-        editor.add_user_phrase(
-            edited_node="Order",
-            success_node="End",
-            user_phrase_type="SearchItem",
-        )
-
-
 def test_add_user_phrase_with_node_not_exists_exception(editor):
     with pytest.raises(NodeNotExistsError):
         editor.add_user_phrase(
+            user_phrase_name="Test",
             edited_node="NotExists",
             success_node="End",
             user_phrase_type="Time",
+            user_phrase_items=[],
         )
 
     with pytest.raises(NodeNotExistsError):
         editor.add_user_phrase(
-            edited_node="Order", success_node="NotExists", user_phrase_type="Time"
+            user_phrase_name="Test",
+            edited_node="Order",
+            success_node="NotExists",
+            user_phrase_type="Time",
+            user_phrase_items=[],
         )
 
 
 def test_add_user_phrase_with_parser_type_not_exists_exception(editor):
     with pytest.raises(ParserTypeNotExistsError):
         editor.add_user_phrase(
+            user_phrase_name="Test",
             edited_node="Order",
             success_node="End",
             user_phrase_type="NotExists",
+            user_phrase_items=[],
         )
 
 
 def test_add_user_phrase_with_success(editor):
+    user_phrase_name = "Test"
     edited_node = "Order"
     success_node = "End"
     user_phrase_type = "Time"
+    user_phrase_items = []
 
-    with mock.patch("chat_maker.editor.ChatEditor.dump_chat_obj") as mocked_dump:
-        editor.add_user_phrase(edited_node, success_node, user_phrase_type)
-        result = mocked_dump.call_args.args[0]
-        for phrase in result["Nodes"][edited_node]["UserPhrases"]:
-            if (
-                phrase["UserPhraseMatch"]["Type"] == user_phrase_type
-                and phrase["SuccessNode"] == success_node
-            ):
-                return True
-    raise Exception("An error occurred while adding data to user phrase")
+    with mock.patch("chat_maker.editor.ChatEditor.dump_chat") as mocked_dump:
+        editor.add_user_phrase(
+            edited_node=edited_node,
+            user_phrase_name=user_phrase_name,
+            success_node=success_node,
+            user_phrase_type=user_phrase_type,
+            user_phrase_items=user_phrase_items,
+        )
+        assert user_phrase_name in editor.chat.nodes[edited_node].user_phrases

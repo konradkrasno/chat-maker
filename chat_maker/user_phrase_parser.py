@@ -39,7 +39,7 @@ class TimeParser(Parser):
 
 
 UserPhraseParserMapping = {
-    "ContainsItems": ContainsItemsParser,
+    "General": ContainsItemsParser,
     "SearchItem": SearchItemParser,
     "Address": AddressParser,
     "Time": TimeParser,

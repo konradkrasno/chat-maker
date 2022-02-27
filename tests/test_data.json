@@ -5,17 +5,17 @@
       "method_args": [],
       "result": {
         "print_calls": [
-          "Path to chat structure file not provided.",
-          "      --chat-file-path",
-          "        Provides path for chat logic json file."
+          "Chat id not provided.",
+          "      --chat-id",
+          "        Provides chat id."
         ]
       }
     },
     {
       "class_args": [],
-      "method_args": ["--chat-file-path=./tests/chat_flow.json"],
+      "method_args": ["--chat-id=local"],
       "result": {
-        "check_code": "with open('./.config', 'r') as f:\n    assert f.readline() == 'chat_file_path=./tests/chat_flow.json'"
+        "check_code": "with open('./.config', 'r') as f:\n    assert f.readline() == 'chat_id=local'"
       }
     }
   ],

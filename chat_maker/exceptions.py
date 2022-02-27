@@ -1,7 +1,3 @@
-class UserPhraseTypeExistsError(Exception):
-    pass
-
-
 class NodeNotExistsError(Exception):
     pass
 

@@ -3,23 +3,23 @@ from typing import List
 from pathlib import Path
 
 from chat_maker.loader import ChatLoader
-from chat_maker.chat import Chat
+from chat_maker.models import Chat
 from chat_maker.exceptions import ConfigurationError
 
 
 class Printer:
-    def __init__(self, file_path: str = None, chat: Chat = None) -> None:
+    def __init__(self, chat_id: str = None, chat: Chat = None) -> None:
         if chat:
             self.chat = chat
-        elif file_path:
-            self.chat = ChatLoader(logic_file_path=file_path)
-        elif Path("../../.config").exists():
-            with open("../../.config", "r") as file:
+        elif chat_id:
+            self.chat = ChatLoader(chat_id=chat_id)
+        elif Path("../.config").exists():
+            with open("../.config", "r") as file:
                 lines = file.readlines()
                 for line in lines:
-                    if "chat_file_path" in line:
-                        path = line.split("=")[1]
-                        self.chat = ChatLoader(logic_file_path=path)
+                    if "chat_id" in line:
+                        chat_id = line.split("=")[1]
+                        self.chat = ChatLoader(chat_id=chat_id)
         else:
             raise ConfigurationError("Printer improperly configured.")
 
