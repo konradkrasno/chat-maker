@@ -1,7 +1,6 @@
 import json
 from typing import Dict, List
 
-import pytest
 from pytest import fixture
 
 from chat_maker.models import Chat
@@ -10,19 +9,8 @@ from chat_maker.editor import ChatEditor
 
 
 @fixture(scope="session")
-def chat_flow_file_path() -> str:
-    return "./tests/chat_flow.json"
-
-
-@fixture(scope="session")
 def chat_id() -> str:
     return "local"
-
-
-@pytest.fixture(scope="session")
-def chat_obj(chat_flow_file_path) -> json:
-    with open(chat_flow_file_path, "r") as file:
-        return json.load(file)
 
 
 @fixture(scope="session")

@@ -11,3 +11,8 @@ venv/
 # dist files
 chat_maker.egg-info/
 dist/
+build/
+
+# terraform files
+infra/.terraform
+infra/.terraform.lock.hcl

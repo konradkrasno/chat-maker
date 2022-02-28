@@ -15,26 +15,47 @@
       "class_args": [],
       "method_args": ["--chat-id=local"],
       "result": {
-        "check_code": "with open('./.config', 'r') as f:\n    assert f.readline() == 'chat_id=local'"
+        "check_code": "with open('./.config', 'r') as f:\n    assert f.readline() == 'chat_id=local\\n'"
       }
     }
   ],
-  "add_node": [
+  "create_node": [
     {
       "class_args": [],
       "method_args": [],
       "result": {
         "print_calls": [
-          "Node name can not be empty.",
-          "      --file-path",
-          "        Provides path to file to be edited.",
+          "Chat editor improperly configured.",
+          "      --chat-id",
+          "        Provides chat id.",
+          "      --from-dynamodb",
+          "        Determines if DynamoDb will be using.",
+          "      --aws-region",
+          "        Provides aws region.",
           "      --node-name",
           "        Provides new node name."
         ]
       }
     },
     {
-      "class_args": [],
+      "class_args": ["--chat-id=local"],
+      "method_args": [],
+      "result": {
+        "print_calls": [
+          "Node name can not be empty.",
+          "      --chat-id",
+          "        Provides chat id.",
+          "      --from-dynamodb",
+          "        Determines if DynamoDb will be using.",
+          "      --aws-region",
+          "        Provides aws region.",
+          "      --node-name",
+          "        Provides new node name."
+        ]
+      }
+    },
+    {
+      "class_args": ["--chat-id=local"],
       "method_args": ["--node-name=TestNode"],
       "result": {
         "print_calls": [
@@ -44,7 +65,7 @@
       }
     },
     {
-      "class_args": [],
+      "class_args": ["--chat-id=local"],
       "method_args": ["--node-name=TestNode"],
       "result": {
         "print_calls": [
@@ -60,16 +81,37 @@
       "method_args": [],
       "result": {
         "print_calls": [
-          "Node name can not be empty.",
-          "      --file-path",
-          "        Provides path to file to be edited.",
+          "Chat editor improperly configured.",
+          "      --chat-id",
+          "        Provides chat id.",
+          "      --from-dynamodb",
+          "        Determines if DynamoDb will be using.",
+          "      --aws-region",
+          "        Provides aws region.",
           "      --node-name",
           "        Provides new node name."
         ]
       }
     },
     {
-      "class_args": [],
+      "class_args": ["--chat-id=local"],
+      "method_args": [],
+      "result": {
+        "print_calls": [
+          "Node name can not be empty.",
+          "      --chat-id",
+          "        Provides chat id.",
+          "      --from-dynamodb",
+          "        Determines if DynamoDb will be using.",
+          "      --aws-region",
+          "        Provides aws region.",
+          "      --node-name",
+          "        Provides new node name."
+        ]
+      }
+    },
+    {
+      "class_args": ["--chat-id=local"],
       "method_args": ["--node-name=TestNode"],
       "result": {
         "print_calls": [

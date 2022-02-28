@@ -211,8 +211,8 @@ class CommandHandler:
         except ConfigurationError as e:
             print(e.__str__())
             self.print_args_info(self.command_data)
-        # except Exception as e:
-        #     print(e.__str__())
+        except Exception as e:
+            print(e.__str__())
 
     @staticmethod
     def print_args_info(cmd_data: Dict) -> None:
@@ -238,6 +238,6 @@ class CommandHandler:
         if not chat_id:
             raise ConfigurationError("Chat id not provided.")
 
-        Path("../.config").touch(exist_ok=True)
-        with open("../.config", "w") as file:
-            file.write(f"chat_id={chat_id}")
+        Path(".config").touch(exist_ok=True)
+        with open(".config", "w") as file:
+            file.write(f"chat_id={chat_id}\n")
