@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import Dict, Tuple
 from json.decoder import JSONDecodeError
 
-from chat_maker.editor import ChatEditor
+from chat_maker.initializer import Initializer
+from chat_maker.editor import ChatEditor, ChatLoader
 from chat_maker.printer import GraphPrinter
 from chat_maker.exceptions import ConfigurationError
 
@@ -33,6 +34,51 @@ COMMANDS = {
     #     ],
     #     "method_args": [],
     # },
+    "init_chat": {
+        "description": "Initialize new chat.",
+        "class": Initializer,
+        "class_args": [
+            {
+                "name": "--from-dynamodb",
+                "type": bool,
+                "description": "Determines if DynamoDb will be using.",
+            },
+            {
+                "name": "--aws-region",
+                "type": str,
+                "description": "Provides aws region.",
+            },
+        ],
+        "method_args": [
+            {
+                "name": "--chat-name",
+                "type": str,
+                "description": "Provides new chat name.",
+            }
+        ],
+    },
+    "get_chat": {
+        "description": "Gets chat object.",
+        "class": ChatLoader,
+        "class_args": [
+            {
+                "name": "--chat-id",
+                "type": str,
+                "description": "Provides chat id.",
+            },
+            {
+                "name": "--from-dynamodb",
+                "type": bool,
+                "description": "Determines if DynamoDb will be using.",
+            },
+            {
+                "name": "--aws-region",
+                "type": str,
+                "description": "Provides aws region.",
+            },
+        ],
+        "method_args": [],
+    },
     "create_node": {
         "description": "Command for adding new node.",
         "class": ChatEditor,
@@ -211,8 +257,8 @@ class CommandHandler:
         except ConfigurationError as e:
             print(e.__str__())
             self.print_args_info(self.command_data)
-        except Exception as e:
-            print(e.__str__())
+        # except Exception as e:
+        #     print(e.__str__())
 
     @staticmethod
     def print_args_info(cmd_data: Dict) -> None:

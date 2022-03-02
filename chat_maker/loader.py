@@ -1,11 +1,12 @@
 import json
+from pprint import pprint
+from typing import Dict
 
 from chat_maker.models import Chat
 from chat_maker.schemas import ChatSchema
 from chat_maker.dynamodb import DynamoDBClient
 
 chat_id_mock = {
-    "BC4F3C85D8": "./fixtures/chat_flow.json",
     "local": "./tests/chat_flow.json",
 }
 
@@ -40,13 +41,20 @@ class ChatLoader:
         chat_model = chat_schema.load(self._chat_data)
         return chat_model
 
-    def dump_chat(self) -> None:
+    def serialize_chat(self) -> Dict:
         chat_schema = ChatSchema()
+        return chat_schema.dump(self.chat)
+
+    def dump_chat(self) -> None:
+        chat_dict = self.serialize_chat()
         if self.dynamodb_client:
-            self.dynamodb_client.put_item(
-                chat_schema.dump(self.chat), "chat-maker-table.chat"
-            )
+            self.dynamodb_client.put_item(chat_dict, "chat-maker-table.chat")
         else:
             file_path = chat_id_mock[self.chat_id]
             with open(file_path, "w") as file:
-                json.dump(chat_schema.dump(self.chat), file)
+                json.dump(chat_dict, file)
+
+    def get_chat(self) -> Dict:
+        chat_dict = self.serialize_chat()
+        pprint(chat_dict)
+        return chat_dict
