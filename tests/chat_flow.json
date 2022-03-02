@@ -1,1 +1,161 @@
-{"name": "TestChat", "start_node": "Start", "chat_id": "local", "nodes": {"Start": {"name": "Start", "user_phrases": {"FoodPhrase": {"name": "FoodPhrase", "items": ["food", "restaurant", "meal", "lunch", "dinner"], "match_type": "General", "success_node": "Food"}, "RestaurantPhrase": {"name": "RestaurantPhrase", "items": [], "match_type": "General", "success_node": "Restaurant"}, "ShoppingPhrase": {"name": "ShoppingPhrase", "items": [], "match_type": "General", "success_node": "Shopping"}}, "bot_phrases": ["Hello, how are you?", "Hello, how can I help you?"], "fail_phrases": ["I can't understand. Could you tell it in different way?"]}, "Food": {"name": "Food", "user_phrases": {"ClientAddressPhrase": {"name": "ClientAddressPhrase", "items": [], "match_type": "SearchItem", "success_node": "ClientAddress"}}, "bot_phrases": ["What do you want to order?"], "fail_phrases": ["I can't find this article in our menu :( Try something different."]}, "Restaurant": {"name": "Restaurant", "user_phrases": {"ClientAddressPhrase": {"name": "ClientAddressPhrase", "items": [], "match_type": "SearchItem", "success_node": "ClientAddress"}, "AdditionalAddressPhrase": {"name": "AdditionalAddressPhrase", "items": [], "match_type": "Address", "success_node": "AdditionalAddress"}}, "bot_phrases": ["What restaurant are you interested in?"], "fail_phrases": ["I can't find this article in our menu :( Try something different."]}, "Shopping": {"name": "Shopping", "user_phrases": {"ClientAddressPhrase": {"name": "ClientAddressPhrase", "items": [], "match_type": "SearchItem", "success_node": "ClientAddress"}, "AdditionalAddressPhrase": {"name": "AdditionalAddressPhrase", "items": [], "match_type": "Address", "success_node": "AdditionalAddress"}}, "bot_phrases": ["What articles do you need?"], "fail_phrases": ["I can't find this article in our menu :( Try something different."]}, "ClientAddress": {"name": "ClientAddress", "user_phrases": {"AddressPhrase": {"name": "AddressPhrase", "items": [], "match_type": "Address", "success_node": "End"}}, "bot_phrases": ["What is your address?"], "fail_phrases": ["I can't understand. Could you tell it in different way?"]}, "End": {"name": "End", "user_phrases": {}, "bot_phrases": ["Thanks for ordering."], "fail_phrases": [""]}, "AdditionalAddress": {"name": "AdditionalAddress", "user_phrases": {"AddressPhrase": {"name": "AddressPhrase", "items": [], "match_type": "Address", "success_node": "End"}}, "bot_phrases": ["What is your additional address?"], "fail_phrases": []}, "Order": {"name": "Order", "user_phrases": {"SearchItemPhrase": {"name": "SearchItemPhrase", "items": [], "match_type": "SearchItem", "success_node": "End"}}, "bot_phrases": [], "fail_phrases": []}}}
+{
+  "name": "TestChat",
+  "start_node": "Start",
+  "chat_id": "local",
+  "nodes": {
+    "Start": {
+      "name": "Start",
+      "user_phrases": {
+        "FoodPhrase": {
+          "name": "FoodPhrase",
+          "items": [
+            "food",
+            "restaurant",
+            "meal",
+            "lunch",
+            "dinner"
+          ],
+          "match_type": "General",
+          "success_node": "Food"
+        },
+        "RestaurantPhrase": {
+          "name": "RestaurantPhrase",
+          "items": [],
+          "match_type": "General",
+          "success_node": "Restaurant"
+        },
+        "ShoppingPhrase": {
+          "name": "ShoppingPhrase",
+          "items": [],
+          "match_type": "General",
+          "success_node": "Shopping"
+        }
+      },
+      "bot_phrases": [
+        "Hello, how are you?",
+        "Hello, how can I help you?"
+      ],
+      "fail_phrases": [
+        "I can't understand. Could you tell it in different way?"
+      ]
+    },
+    "Food": {
+      "name": "Food",
+      "user_phrases": {
+        "ClientAddressPhrase": {
+          "name": "ClientAddressPhrase",
+          "items": [],
+          "match_type": "SearchItem",
+          "success_node": "ClientAddress"
+        }
+      },
+      "bot_phrases": [
+        "What do you want to order?"
+      ],
+      "fail_phrases": [
+        "I can't find this article in our menu :( Try something different."
+      ]
+    },
+    "Restaurant": {
+      "name": "Restaurant",
+      "user_phrases": {
+        "ClientAddressPhrase": {
+          "name": "ClientAddressPhrase",
+          "items": [],
+          "match_type": "SearchItem",
+          "success_node": "ClientAddress"
+        },
+        "AdditionalAddressPhrase": {
+          "name": "AdditionalAddressPhrase",
+          "items": [],
+          "match_type": "Address",
+          "success_node": "AdditionalAddress"
+        }
+      },
+      "bot_phrases": [
+        "What restaurant are you interested in?"
+      ],
+      "fail_phrases": [
+        "I can't find this article in our menu :( Try something different."
+      ]
+    },
+    "Shopping": {
+      "name": "Shopping",
+      "user_phrases": {
+        "ClientAddressPhrase": {
+          "name": "ClientAddressPhrase",
+          "items": [],
+          "match_type": "SearchItem",
+          "success_node": "ClientAddress"
+        },
+        "AdditionalAddressPhrase": {
+          "name": "AdditionalAddressPhrase",
+          "items": [],
+          "match_type": "Address",
+          "success_node": "AdditionalAddress"
+        }
+      },
+      "bot_phrases": [
+        "What articles do you need?"
+      ],
+      "fail_phrases": [
+        "I can't find this article in our menu :( Try something different."
+      ]
+    },
+    "ClientAddress": {
+      "name": "ClientAddress",
+      "user_phrases": {
+        "AddressPhrase": {
+          "name": "AddressPhrase",
+          "items": [],
+          "match_type": "Address",
+          "success_node": "End"
+        }
+      },
+      "bot_phrases": [
+        "What is your address?"
+      ],
+      "fail_phrases": [
+        "I can't understand. Could you tell it in different way?"
+      ]
+    },
+    "End": {
+      "name": "End",
+      "user_phrases": {},
+      "bot_phrases": [
+        "Thanks for ordering."
+      ],
+      "fail_phrases": [
+        ""
+      ]
+    },
+    "AdditionalAddress": {
+      "name": "AdditionalAddress",
+      "user_phrases": {
+        "AddressPhrase": {
+          "name": "AddressPhrase",
+          "items": [],
+          "match_type": "Address",
+          "success_node": "End"
+        }
+      },
+      "bot_phrases": [
+        "What is your additional address?"
+      ],
+      "fail_phrases": []
+    },
+    "Order": {
+      "name": "Order",
+      "user_phrases": {
+        "SearchItemPhrase": {
+          "name": "SearchItemPhrase",
+          "items": [],
+          "match_type": "SearchItem",
+          "success_node": "End"
+        }
+      },
+      "bot_phrases": [],
+      "fail_phrases": []
+    }
+  }
+}
