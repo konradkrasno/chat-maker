@@ -22,12 +22,12 @@ class ChatEditor(ChatLoader):
 
         if chat_id:
             self.chat_id = chat_id
-        elif Path("../.config").exists():
-            with open("../.config", "r") as file:
+        elif Path(".config").exists():
+            with open(".config", "r") as file:
                 lines = file.readlines()
                 for line in lines:
                     if "chat_id" in line:
-                        self.chat_id = line.split("=")[1]
+                        self.chat_id = line.split("=")[1].replace("\n", "")
         else:
             raise ConfigurationError("Chat editor improperly configured.")
 
