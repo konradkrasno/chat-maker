@@ -16,10 +16,6 @@ class ChatEditor(ChatLoader):
     def __init__(
         self, chat_id: str, from_dynamodb: bool = True, aws_region: str = None
     ) -> None:
-        super().__init__(
-            chat_id=chat_id, from_dynamodb=from_dynamodb, aws_region=aws_region
-        )
-
         if chat_id:
             self.chat_id = chat_id
         elif Path(".config").exists():
@@ -29,7 +25,11 @@ class ChatEditor(ChatLoader):
                     if "chat_id" in line:
                         self.chat_id = line.split("=")[1].replace("\n", "")
         else:
-            raise ConfigurationError("Chat editor improperly configured.")
+            self.chat_id = "local"
+
+        super().__init__(
+            chat_id=self.chat_id, from_dynamodb=from_dynamodb, aws_region=aws_region
+        )
 
     def create_node(self, node_name: str) -> None:
         if not node_name:

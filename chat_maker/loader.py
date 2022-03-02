@@ -15,7 +15,7 @@ class ChatLoader:
     def __init__(
         self, chat_id: str, from_dynamodb: bool = True, aws_region: str = None
     ) -> None:
-        self.chat_id = chat_id if chat_id else "local"
+        self.chat_id = chat_id
         self.aws_region = aws_region
         self.dynamodb_client = (
             DynamoDBClient(aws_region=aws_region) if from_dynamodb else None
