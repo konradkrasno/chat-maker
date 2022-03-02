@@ -1,13 +1,21 @@
+import os
 from typing import Dict
 
 import boto3
 from botocore.exceptions import ClientError
 
+ENVIRONMENT = os.environ.get("ENVIRONMENT")
+
 
 class DynamoDBClient:
     def __init__(self, aws_region: str):
         self.aws_region = aws_region
-        self.dynamodb_host = f"https://dynamodb.{aws_region}.amazonaws.com"
+
+        if ENVIRONMENT == "dev":
+            self.dynamodb_host = "http://localhost:4566"
+        else:
+            self.dynamodb_host = f"https://dynamodb.{aws_region}.amazonaws.com"
+
         self.dynamodb = boto3.resource("dynamodb", endpoint_url=self.dynamodb_host)
 
     def get_item(self, item_id: Dict, table: str) -> Dict:
