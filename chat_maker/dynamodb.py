@@ -4,7 +4,7 @@ from typing import Dict
 import boto3
 from botocore.exceptions import ClientError
 
-ENVIRONMENT = os.environ.get("ENVIRONMENT")
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "dev")
 
 
 class DynamoDBClient:

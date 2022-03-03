@@ -84,8 +84,7 @@ class ChatEditor(ChatLoader):
             )
 
         if user_phrase_name in node.user_phrases.keys():
-            print(f"User phrase with name '{user_phrase_name}' already exists.")
-            return None
+            raise Exception(f"User phrase with name '{user_phrase_name}' already exists.")
 
         if user_phrase_type not in UserPhraseParserMapping.keys():
             raise ParserTypeNotExistsError(
@@ -127,7 +126,7 @@ class ChatEditor(ChatLoader):
         try:
             node.remove_user_phrase(user_phrase_name)
         except KeyError:
-            print(f"User phrase with name '{user_phrase_name}' not exists.")
+            raise Exception(f"User phrase with name '{user_phrase_name}' not exists.")
         else:
             print(f"User phrase '{user_phrase_name}' deleted successfully.")
             self.dump_chat()
